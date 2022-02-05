@@ -1,15 +1,9 @@
-import { ref, watch, type Ref } from "vue";
+import { ref, watch, type Ref, onUnmounted, onMounted } from "vue";
 
 export default function useScrollEndDetection(
   containerRef: Ref<HTMLElement | null>
 ) {
   const scrolledToBottom = ref(false);
-
-  watch(containerRef, () => {
-    if (containerRef.value) {
-      containerRef.value.addEventListener("scroll", trackScrolling);
-    }
-  });
 
   function trackScrolling(event) {
     const element: HTMLElement = event.target;
@@ -17,6 +11,18 @@ export default function useScrollEndDetection(
       scrolledToBottom.value = true;
     }
   }
+
+  onMounted(() => {
+    if (containerRef.value) {
+      containerRef.value.addEventListener("scroll", trackScrolling);
+    }
+  });
+
+  onUnmounted(() => {
+    if (containerRef.value) {
+      containerRef.value.removeEventListener("scroll", trackScrolling);
+    }
+  });
 
   return { scrolledToBottom };
 }

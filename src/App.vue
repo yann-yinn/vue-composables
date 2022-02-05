@@ -7,9 +7,11 @@ import { RouterLink, RouterView } from "vue-router";
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink> |
-        <RouterLink to="/use-scroll-end-detection"
-          >useScrollEndDetection</RouterLink
-        >
+        <RouterLink to="/use-scroll-end-detection">
+          useScrollEndDetection
+        </RouterLink>
+        |
+        <RouterLink to="/use-api-request"> useApiRequest </RouterLink>
       </nav>
     </div>
   </header>

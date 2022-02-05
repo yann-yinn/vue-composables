@@ -14,6 +14,11 @@ const router = createRouter({
       name: "useScrollEndDetection",
       component: () => import("@/views/useScrollEndDetection.vue"),
     },
+    {
+      path: "/use-api-request",
+      name: "useApiRequest",
+      component: () => import("@/views/useApiRequest.vue"),
+    },
   ],
 });
 
