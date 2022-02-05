@@ -3,7 +3,9 @@ import { ref } from "vue";
 type RequestState = "UNSENT" | "PENDING" | "SUCCESS" | "ERROR";
 
 /**
- * Fetch JSON from an API using Fetch(). Example usage:
+ * Fetch JSON from an API using Fetch(). This function also
+ * add automatically a token to the headers, if there is one.
+ * Example usage:
  *
  * <code>
  * interface User {id:string; name:string;}
@@ -19,6 +21,18 @@ export default function useApiRequest<Type>(
   const state = ref<RequestState>("UNSENT");
   const data = ref<Type | null>(null);
   const error = ref<string | null>(null);
+
+  const token = getToken();
+  if (token) {
+    init.headers = {
+      ...init.headers,
+      Authorization: `Bearer ${token}`,
+    };
+    console.log("youhou", token);
+  }
+
+  // add jwt token to headers, if any.
+  addAuthorizationHeaders(init);
 
   async function execute(): Promise<Type> {
     state.value = "PENDING";
@@ -36,4 +50,18 @@ export default function useApiRequest<Type>(
   }
 
   return { state, error, data, execute };
+}
+
+function getToken() {
+  return localStorage.getItem("token");
+}
+
+function addAuthorizationHeaders(init: RequestInit) {
+  const token = getToken();
+  if (token) {
+    init.headers = {
+      ...init.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
 }
