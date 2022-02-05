@@ -1,17 +1,16 @@
-/**
- * Usage in a component:
- *
- * import useApiRequest from "@/composables/useApiRequest"
- *
- * const usersRequest = useApiRequest("https://jsonplaceholder.typicode.com/users");
- *
- * function handleFormSubmit() {
- *   usersRequest.execute()
- * }
- */
 import { ref } from "vue";
 
 type RequestState = "UNSENT" | "PENDING" | "SUCCESS" | "ERROR";
+
+/**
+ * Fetch JSON from an API using Fetch(). Example usage:
+ *
+ * <code>
+ * interface User {id:string; name:string;}
+ * const { state, error, data, execute } = useApiRequest<Users[]>("api/users");
+ * execute();
+ * </code>
+ */
 
 export default function useApiRequest<Type>(
   url: string,
