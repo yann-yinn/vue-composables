@@ -9,7 +9,7 @@
  *   usersRequest.execute()
  * }
  */
-import { ref } from "vue";
+import { reactive } from "vue";
 
 type RequestState = "UNSENT" | "PENDING" | "SUCCESS" | "ERROR";
 
@@ -17,24 +17,30 @@ export default function useApiRequest<Type>(
   url: string,
   init: RequestInit = { method: "GET" }
 ) {
-  const state = ref<RequestState>("UNSENT");
-  const data = ref<Type | null>(null);
-  const error = ref<string | null>(null);
+  const state = reactive<{
+    state: RequestState;
+    data: Type | null;
+    error: string | null;
+  }>({
+    state: "UNSENT",
+    data: null,
+    error: null,
+  });
 
   async function execute(): Promise<Type> {
-    state.value = "PENDING";
-    error.value = null;
+    state.state = "PENDING";
+    state.error = null;
     const response = await fetch(url, init);
     if (!response.ok) {
-      state.value = "ERROR";
-      error.value = `HTTP error! status: ${response.status}`;
-      throw new Error(error.value);
+      state.state = "ERROR";
+      state.error = `HTTP error! status: ${response.status}`;
+      throw new Error(state.error);
     }
-    const result = await response.json();
-    data.value = result;
-    state.value = "SUCCESS";
-    return result;
+    const data = await response.json();
+    state.data = data;
+    state.state = "SUCCESS";
+    return data;
   }
 
-  return { state, error, data, execute };
+  return { state, execute };
 }
