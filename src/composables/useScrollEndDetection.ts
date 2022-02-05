@@ -15,7 +15,9 @@ export default function useScrollEndDetection(
   }
 
   onMounted(() => {
-    if (containerRef.value) {
+    if (containerRef.value === null) {
+      throw new Error(`useScrollEndDetection(): no HTML Element found`);
+    } else {
       containerRef.value.addEventListener("scroll", trackScrolling);
     }
   });
