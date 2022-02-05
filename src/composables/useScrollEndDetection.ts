@@ -1,4 +1,4 @@
-import { ref, watch, type Ref, onUnmounted, onMounted } from "vue";
+import { ref, type Ref, onUnmounted, onMounted } from "vue";
 
 export default function useScrollEndDetection(
   containerRef: Ref<HTMLElement | null>
