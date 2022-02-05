@@ -1,25 +1,13 @@
 <script setup lang="ts">
 import useApiRequest from "@/composables/useApiRequest";
+import type { JsonPlaceholderUser, JsonPlaceholderTodo } from "@/types";
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-interface Todo {
-  title: string;
-  completed: boolean;
-  userId: number;
-  id: number;
-}
-
-const usersRequest = useApiRequest<User[]>(
+const usersRequest = useApiRequest<JsonPlaceholderUser[]>(
   "https://jsonplaceholder.typicode.com/users"
 );
 usersRequest.execute();
 
-const todosRequest = useApiRequest<Todo[]>(
+const todosRequest = useApiRequest<JsonPlaceholderTodo[]>(
   "https://jsonplaceholder.typicode.com/todos"
 );
 todosRequest.execute();
@@ -27,6 +15,7 @@ todosRequest.execute();
 
 <template>
   <h1>Users</h1>
+  <div v-if="usersRequest.state.error">{{ usersRequest.state.error }}</div>
   <div v-if="usersRequest.state.state === 'PENDING'">Chargement</div>
   <div v-if="usersRequest.state.state === 'SUCCESS'">
     <div v-for="user in usersRequest.state.data" :key="user.id">
@@ -34,6 +23,7 @@ todosRequest.execute();
     </div>
   </div>
   <h1>Todos</h1>
+  <div v-if="todosRequest.state.error">{{ todosRequest.state.error }}</div>
   <div v-if="todosRequest.state.state === 'PENDING'">Chargement</div>
   <div v-if="todosRequest.state.state === 'SUCCESS'">
     <div v-for="todo in todosRequest.state.data" :key="todo.id">

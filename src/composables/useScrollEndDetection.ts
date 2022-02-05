@@ -5,10 +5,12 @@ export default function useScrollEndDetection(
 ) {
   const scrolledToBottom = ref(false);
 
-  function trackScrolling(event) {
-    const element: HTMLElement = event.target;
-    if (element.clientHeight + element.scrollTop == element.scrollHeight) {
-      scrolledToBottom.value = true;
+  function trackScrolling(event: Event) {
+    if (event.target) {
+      const element = event.target as HTMLElement;
+      if (element.clientHeight + element.scrollTop == element.scrollHeight) {
+        scrolledToBottom.value = true;
+      }
     }
   }
 
