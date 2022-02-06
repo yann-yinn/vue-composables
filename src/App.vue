@@ -11,7 +11,8 @@ import { RouterLink, RouterView } from "vue-router";
           useScrollEndDetection
         </RouterLink>
         |
-        <RouterLink to="/use-api-request"> useApiRequest </RouterLink>
+        <RouterLink to="/use-api-request"> useApiRequest </RouterLink> |
+        <RouterLink to="/use-mouse"> useMouse </RouterLink>
       </nav>
     </div>
   </header>

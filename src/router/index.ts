@@ -19,6 +19,11 @@ const router = createRouter({
       name: "useApiRequest",
       component: () => import("@/views/useApiRequest.vue"),
     },
+    {
+      path: "/use-mouse",
+      name: "useMouse",
+      component: () => import("@/views/useMouse.vue"),
+    },
   ],
 });
 
