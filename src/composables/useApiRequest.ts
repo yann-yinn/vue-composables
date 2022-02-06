@@ -2,6 +2,8 @@ import { ref } from "vue";
 
 type RequestState = "UNSENT" | "PENDING" | "SUCCESS" | "ERROR";
 
+const tokenName = "token";
+
 /**
  * Fetch JSON from an API using Fetch(). This function also
  * add automatically a token to the headers, if there is one.
@@ -21,15 +23,6 @@ export default function useApiRequest<Type>(
   const state = ref<RequestState>("UNSENT");
   const data = ref<Type | null>(null);
   const error = ref<string | null>(null);
-
-  const token = getToken();
-  if (token) {
-    init.headers = {
-      ...init.headers,
-      Authorization: `Bearer ${token}`,
-    };
-    console.log("youhou", token);
-  }
 
   // add jwt token to headers, if any.
   addAuthorizationHeaders(init);
@@ -52,12 +45,12 @@ export default function useApiRequest<Type>(
   return { state, error, data, execute };
 }
 
-function getToken() {
-  return localStorage.getItem("token");
-}
-
+/**
+ * Search for a JWT token in localStorage, and add it
+ * to the HTTP Headers if found.
+ */
 function addAuthorizationHeaders(init: RequestInit) {
-  const token = getToken();
+  const token = localStorage.getItem(tokenName);
   if (token) {
     init.headers = {
       ...init.headers,
