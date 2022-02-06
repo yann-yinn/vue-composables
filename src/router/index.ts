@@ -24,6 +24,11 @@ const router = createRouter({
       name: "useMouse",
       component: () => import("@/views/useMouse.vue"),
     },
+    {
+      path: "/use-store-counter",
+      name: "useStoreCounter",
+      component: () => import("@/views/useStoreCounter.vue"),
+    },
   ],
 });
 

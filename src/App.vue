@@ -12,7 +12,8 @@ import { RouterLink, RouterView } from "vue-router";
         </RouterLink>
         |
         <RouterLink to="/use-api-request"> useApiRequest </RouterLink> |
-        <RouterLink to="/use-mouse"> useMouse </RouterLink>
+        <RouterLink to="/use-mouse"> useMouse </RouterLink> |
+        <RouterLink to="/use-store-counter"> useStoreCounter </RouterLink>
       </nav>
     </div>
   </header>
